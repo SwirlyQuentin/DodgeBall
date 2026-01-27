@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Movement config;
     public Dash dashConfig;
-    public float DashLength {get; set;}
+    public float DashCooldown {get; set;}
     public float DashTime {get; set;}
     public float DashSpeed {get; set;}
     public float MoveSpeed {get; set;}
@@ -17,10 +17,13 @@ public class PlayerMovement : MonoBehaviour
 
     public bool lockMovement = false;
 
+    private bool canDash = true;
+    private float currentDashCooldown = 0f;
+
     void Awake()
     {
         MoveSpeed = config.speed;
-        DashLength = dashConfig.DashLength;
+        DashCooldown = dashConfig.DashCooldown;
         DashTime = dashConfig.DashTime;
         DashSpeed = dashConfig.DashSpeed;
     }
@@ -35,9 +38,20 @@ public class PlayerMovement : MonoBehaviour
             Move();
         }
         //Still move dash
-        if (player.StateMachine.CurrentPlayerState is DashState  && lockMovement)
+        if (canDash)
         {
-            Dash();
+            if (player.StateMachine.CurrentPlayerState is DashState  && lockMovement)
+            {
+                Dash();
+            }   
+        }
+        else
+        {
+            currentDashCooldown -= Time.deltaTime;
+            if (currentDashCooldown <= 0)
+            {
+                canDash = true;
+            }
         }
     }
 
@@ -45,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
     private void Dash()
     {
         rb.linearVelocity = dashDirection * DashSpeed;
+        canDash = false;
+        currentDashCooldown = DashCooldown;
         // Debug.Log($"Dashing direction: ${dashDirection}  Speed: ${DashSpeed}");
     }
 
