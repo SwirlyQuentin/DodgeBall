@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee287ecdbf41d394896532cc16ccb02c, type: 3}
-  m_Name: PlayerDash
-  m_EditorClassIdentifier: Assembly-CSharp::Dash
-  DashCooldown: 0.7
-  DashTime: 0.1
-  DashSpeed: 68
+  m_Script: {fileID: 11500000, guid: bccd2dc089363c24ba4c20f802516b44, type: 3}
+  m_Name: SingleShooterAttackConfig
+  m_EditorClassIdentifier: Assembly-CSharp::AttackConfig
+  BulletForce: 0
+  BulletSize: 0
+  BulletTime: 0
+  Bullet: {fileID: 0}
