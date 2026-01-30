@@ -4,8 +4,8 @@ using UnityEngine;
 public class AttackConfig : ScriptableObject
 {
     public float BulletForce;
-    public float BulletSize;
     public float BulletTime;
+    public float AttackCooldown;
     public GameObject Bullet;
 
 

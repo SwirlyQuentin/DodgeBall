@@ -99,6 +99,15 @@ Assets/
 ```
 
 ## Notes for AI Agents
+
+### Documentation & Reference
+**Before formulating responses, consult these official Unity resources:**
+- [Unity Script Reference](https://docs.unity3d.com/ScriptReference/) - API documentation for all Unity classes, methods, and properties
+- [Unity Manual](https://docs.unity3d.com/Manual/) - Detailed guides on Unity concepts, architecture, and best practices
+
+This ensures recommendations are aligned with current Unity documentation and best practices.
+
+### Development Guidance
 - This codebase is **early stage**; many systems are scaffolded (e.g., `AttackComponent` incomplete)
 - Focus on **consistency** with existing patterns (state machine, config objects, component interfaces)
 - Use `Debug.Log()` for current logging (e.g., death state)
