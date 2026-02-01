@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 
@@ -16,30 +17,49 @@ public class AttackComponent : MonoBehaviour, IAttackSource
     {
         public Transform position;
         public Transform target;
+        public Vector3 defaultTarget;
 
+    }
+
+
+    void Start()
+    {
+        GetDefaultTargets();
     }
 
 
     public void SetTarget(Transform target)
     {
-        foreach (FirePoint fp in firePoints)
+        Debug.Log($"tRAGET {target}");
+        if (config.CanHaveTarget)
         {
-            fp.target = target;
+            foreach (FirePoint fp in firePoints)
+            {
+                fp.target = target;
+            }
         }
     }
 
 
     private void Fire(FirePoint fp)
     {
-        if (fp.target == null)
-        {
-            return;
-        }
 
-        GameObject bulletInstance = Instantiate(config.Bullet, fp.position);
+        SetDefaultFirePointTarget(fp);
+        Vector2 direction;
+        GameObject bulletInstance = Instantiate(config.Bullet, fp.position.position, fp.position.rotation);
+
+
         if (bulletInstance.TryGetComponent(out Rigidbody2D rb))
         {
-            Vector2 direction = (fp.target.position - fp.position.position).normalized;
+            // if (fp.target == null)
+            // {
+            // direction = (fp.defaultTarget - fp.position.position).normalized;
+            // }
+            // else{
+            //     direction = (fp.target.position - fp.position.position).normalized;
+            // }
+
+            direction = (fp.defaultTarget - fp.position.position).normalized;
             rb.linearVelocity = direction * config.BulletForce;
         }
 
@@ -69,6 +89,13 @@ public class AttackComponent : MonoBehaviour, IAttackSource
 
     void Update()
     {
+
+        if (IsAttacking && config.CanHaveTarget)
+        {
+            RotateTowardsTarget();
+        }
+
+
         if (IsAttacking)
         {
             if (attackTimer <= 0)
@@ -82,4 +109,37 @@ public class AttackComponent : MonoBehaviour, IAttackSource
             }
         }
     }
+
+    #region Helper Functions
+
+    private void SetDefaultFirePointTarget(FirePoint fp)
+    {
+        // Vector3 direction = -transform.up * 1000;
+        // fp.defaultTarget = direction + (fp.position.position - transform.position);
+
+        // fp.position.rotation = transform.rotation;
+        fp.defaultTarget = fp.position.position + (-fp.position.up * 100f);
+    }
+
+    private void GetDefaultTargets(){
+        foreach (FirePoint fp in firePoints){
+            SetDefaultFirePointTarget(fp);
+        }
+    }
+
+    private void RotateTowardsTarget()
+    {
+        if (firePoints.Length > 0 && firePoints[0].target != null)
+        {
+            Vector2 direction = firePoints[0].target.position - transform.position;
+            if (direction != Vector2.zero)
+            {
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle + 90f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * config.RotationSpeed);
+            }
+        }
+    }
+
+    #endregion
 }

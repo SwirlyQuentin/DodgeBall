@@ -7,6 +7,8 @@ public class AttackConfig : ScriptableObject
     public float BulletTime;
     public float AttackCooldown;
     public GameObject Bullet;
+    public bool CanHaveTarget;
+    public float RotationSpeed;
 
 
 }
