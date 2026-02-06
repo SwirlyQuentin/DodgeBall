@@ -14,6 +14,7 @@ public class DashState : PlayerState
     {
         base.EnterState();
         player.movement.LockMovement();
+        player.movement.StartDash();
         timer = dashConfig.DashTime;
     }
 
@@ -23,15 +24,15 @@ public class DashState : PlayerState
         player.movement.UnlockMovement();
     }
 
-    public override void FrameUpdate()
+    public override void PhysicsUpdate()
     {
-        base.FrameUpdate();
-        timer -= Time.deltaTime;
+        base.PhysicsUpdate();
+        player.movement.KeepDashSpeed();
+        timer -= Time.fixedDeltaTime;
 
         if (timer <= 0)
         {
             player.StateMachine.ChangeState(player.DefaultState);
         }
-
     }
 }

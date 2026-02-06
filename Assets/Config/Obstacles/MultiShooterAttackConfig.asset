@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccd2dc089363c24ba4c20f802516b44, type: 3}
+  m_Name: MultiShooterAttackConfig
+  m_EditorClassIdentifier: Assembly-CSharp::AttackConfig
+  BulletForce: 10
+  BulletTime: 10
+  AttackCooldown: 5
+  Bullet: {fileID: 8880715561690966545, guid: 64998bb514f7a63428e2b383ad582b00, type: 3}
+  CanHaveTarget: 0
+  RotationSpeed: 0

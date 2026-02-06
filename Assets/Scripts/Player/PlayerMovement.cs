@@ -32,20 +32,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        // If movement is locked, dont let player move using WASD or another Dash
-        if(!lockMovement)
-        {
-            Move();
-        }
-        //Still move dash
-        if (canDash)
-        {
-            if (player.StateMachine.CurrentPlayerState is DashState  && lockMovement)
-            {
-                Dash();
-            }   
-        }
-        else
+        if (!canDash)
         {
             currentDashCooldown -= Time.deltaTime;
             if (currentDashCooldown <= 0)
@@ -53,15 +40,29 @@ public class PlayerMovement : MonoBehaviour
                 canDash = true;
             }
         }
+
+        // If movement is locked, dont let player move using WASD or another Dash
+        if(!lockMovement)
+        {
+            Move();
+        }
+
     }
 
 
-    private void Dash()
+    public void KeepDashSpeed()
     {
         rb.linearVelocity = dashDirection * DashSpeed;
-        canDash = false;
-        currentDashCooldown = DashCooldown;
-        // Debug.Log($"Dashing direction: ${dashDirection}  Speed: ${DashSpeed}");
+    }
+
+    public void StartDash()
+    {
+        if (canDash)
+        {
+            rb.linearVelocity = dashDirection * DashSpeed;
+            canDash = false;
+            currentDashCooldown = DashCooldown;
+        }
     }
 
     private void Move()
@@ -78,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && canDash)
         {
             if (moveInput != Vector2.zero)
             {
