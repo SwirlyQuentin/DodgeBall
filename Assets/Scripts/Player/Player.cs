@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     public Dash dashConfig;
 
     public PlayerMovement movement;
+    public HealthComponent health;
     
     #region PlayerStateMachine Variables
 
@@ -39,6 +40,11 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         StateMachine.CurrentPlayerState.PhysicsUpdate();
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 
 }

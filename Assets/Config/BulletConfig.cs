@@ -1,8 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BulletConfig", menuName = "Scriptable Objects/BulletConfig")]
+[CreateAssetMenu(fileName = "BulletConfig", menuName = "Config/BulletConfig")]
 public class BulletConfig : ScriptableObject
 {
-    public float BulletSize;
     public float BulletDamage;
 }

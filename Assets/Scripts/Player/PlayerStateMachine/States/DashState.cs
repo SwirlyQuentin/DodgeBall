@@ -13,6 +13,8 @@ public class DashState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        player.health.SetInvulnerable();
+
         player.movement.LockMovement();
         player.movement.StartDash();
         timer = dashConfig.DashTime;
@@ -21,6 +23,7 @@ public class DashState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
+        player.health.SetVulnerable();
         player.movement.UnlockMovement();
     }
 

@@ -8,10 +8,16 @@ public class BulletComponent : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IDamageable damageable))
+        if (collision.CompareTag("Player"))
         {
-            damageable.Damage(config.BulletDamage);
-            Destroy(gameObject);
+            if (collision.TryGetComponent(out IDamageable damageable))
+            {
+                if (damageable.CanDamage)
+                {
+                    damageable.Damage(config.BulletDamage);
+                    Destroy(gameObject);
+                }
+            }
         }
     }
 }

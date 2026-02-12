@@ -30,7 +30,6 @@ public class AttackComponent : MonoBehaviour, IAttackSource
 
     public void SetTarget(Transform target)
     {
-        Debug.Log($"tRAGET {target}");
         if (config.CanHaveTarget)
         {
             foreach (FirePoint fp in firePoints)

@@ -12,4 +12,9 @@ public class AttackState : ObstacleState
         base.EnterState();
         obstacle.AttackSource.StartAttack();
     }
+
+    public void OnPlayerDead()
+    {
+        obstacle.StateMachine.ChangeState(obstacle.IdleState);
+    }
 }
